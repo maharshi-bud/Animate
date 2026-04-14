@@ -5,22 +5,17 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lenis from "@studio-freight/lenis";
 import Header from "./components/Header";
 import Hero from "./components/Hero";
+import SocialProof from "./components/SocialProof";
 
 gsap.registerPlugin(ScrollTrigger);
 
 function App() {
   const bgRef = useRef([]);
-   const colors = [
-  "#ffffff",   // clean white
-  "#f3eadb",   // warm paper
-  "#e8dcc5",   // aged paper
-  "#d9cbb3",   // deeper beige
-  // "#cbb89d",   // soft tan
-  // "#bfa88a",   // muted brown
-  // "#a38f75",   // darker neutral
-];
+  const totalCards = 20;
+
+  const colors = ["#ffffff", "#f3eadb", "#e8dcc5", "#d9cbb3"];
+
   useEffect(() => {
-    // 🌊 Lenis
     const lenis = new Lenis();
 
     function raf(time) {
@@ -31,45 +26,31 @@ function App() {
 
     lenis.on("scroll", ScrollTrigger.update);
 
-    // 🎯 Header scroll effect
-    gsap.to(".header", {
-      background: "rgba(247,243,235,0.85)",
-      backdropFilter: "blur(10px)",
-      scrollTrigger: {
-        trigger: document.body,
-        start: "top top",
-        end: "bottom top",
-        scrub: true,
-      },
-    });
-
-    // 🎯 Hero parallax
-    gsap.to(".hero-content", {
-      y: -50,
-      scrollTrigger: {
-        trigger: ".hero",
-        start: "top top",
-        end: "bottom top",
-        scrub: true,
-      },
-    });
-
-    // 🌊 Floating background
     bgRef.current.forEach((el, i) => {
       if (!el) return;
 
+      // 🌊 Floating animation
       gsap.to(el, {
-      y : 40 + Math.random() * 600,
-      x : i % 2 === 0 ? 40 : -40, // opposite directions
-  rotation: i%2 === 0 ? Math.random() * 20 :  Math.random() * -20,
+        y: "+=100",
+        x: i % 2 === 0 ? "+=40" : "-=40",
+        rotation: i % 2 === 0 ? 10 : -10,
+        duration: 6 + Math.random() * 3,
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut",
+      });
 
-  duration: 12 + Math.random() * 50,
-  // delay: i * 0.2,
-
-  repeat: -1,
-  yoyo: true,
-  ease: "sine.inOut",
-});
+      // 🌊 Scroll movement (subtle depth effect)
+      gsap.to(el, {
+        y: i % 2 === 0 ? "+=200" : "-=200",
+        ease: "none",
+        scrollTrigger: {
+          trigger: document.body,
+          start: "top top",
+          end: "bottom bottom",
+          scrub: 1,
+        },
+      });
     });
 
     return () => {
@@ -80,21 +61,20 @@ function App() {
 
   return (
     <main className="app">
-
       {/* 🌊 Background */}
       <div className="bg-animation">
-        {[...Array(20)].map((_, i) => (
+        {[...Array(totalCards)].map((_, i) => (
           <div
             key={i}
             className="bg-book"
             ref={(el) => (bgRef.current[i] = el)}
             style={{
-              ttop: `${Math.random() * 100}%`,
-  left: i % 2 === 0 
-    ? `${Math.random() * 40}%`
-    : `${60 + Math.random() * 20}%`,
-  background: colors[i % colors.length]
-
+              top: `${Math.random() * 100}%`,
+              left:
+                i % 2 === 0
+                  ? `${Math.random() * 40}%`
+                  : `${60 + Math.random() * 20}%`,
+              background: colors[i % colors.length],
             }}
           />
         ))}
@@ -102,7 +82,9 @@ function App() {
 
       <Header />
       <Hero />
+      <SocialProof />
 
+      
     </main>
   );
 }

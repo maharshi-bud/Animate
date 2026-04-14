@@ -13,13 +13,10 @@
   overflow-x: hidden;
 }
 
-/* Background animation */
+/* 🌊 Background */
 .bg-animation {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  inset: 0;
   pointer-events: none;
   z-index: 0;
 }
@@ -28,21 +25,18 @@
   position: absolute;
   width: 50px;
   height: 70px;
+  border-radius: 4px;
+  opacity: 0.7;
 
-  background: linear-gradient(
-    145deg,
-    #ffffff,
-    #e6dcc8
-  );
-
-  border-radius: 3px;
-
-  opacity: 0.6; /* increased */
-
-  box-shadow: 
+  box-shadow:
     0 6px 15px rgba(0,0,0,0.08),
     inset 2px 0 0 rgba(0,0,0,0.06);
 
   transform-origin: center;
   will-change: transform;
+}
+
+/* Placeholder section */
+.quote-zone {
+  height: 120vh;
 }
