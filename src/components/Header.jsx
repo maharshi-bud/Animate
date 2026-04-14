@@ -7,21 +7,16 @@ function Header() {
       className="header"
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8, ease: "easeOut" }}
+      transition={{ duration: 0.8 }}
     >
-      {/* Logo */}
-      <div className="logo">
-        Ink & Stories
-      </div>
+      <div className="logo">Ink & Stories</div>
 
-      {/* Navigation */}
       <nav className="nav">
         <a href="#">Discover</a>
         <a href="#">Authors</a>
         <a href="#">Collections</a>
       </nav>
 
-      {/* CTA */}
       <motion.button
         className="cta"
         whileHover={{ scale: 1.05 }}

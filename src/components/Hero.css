@@ -1,0 +1,49 @@
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 2rem;
+
+  background: radial-gradient(circle at top, #ffffff, #e4eccb);
+  text-align: center;
+}
+
+.hero-content {
+  max-width: 800px;
+}
+
+/* Heading */
+.hero h1 {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 3.2rem;
+  line-height: 1.2;
+  margin-bottom: 1.2rem;
+}
+
+/* Paragraph */
+.hero p {
+  font-family: "DM Sans", sans-serif;
+  font-size: 1.1rem;
+  opacity: 0.8;
+  margin-bottom: 2rem;
+}
+
+/* Button */
+.hero-btn {
+  background: #1f7a63;
+  color: white;
+  border: none;
+  padding: 0.8rem 1.6rem;
+  border-radius: 999px;
+
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.95rem;
+  cursor: pointer;
+
+  transition: background 0.3s;
+}
+
+.hero-btn:hover {
+  background: #166b55;
+}
