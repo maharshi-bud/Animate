@@ -1,0 +1,109 @@
+.flipbook-section {
+  height: 120vh;
+  position: relative;
+}
+
+/* BOOK */
+.book {
+  width: 600px; /* 👈 DOUBLE WIDTH */
+  height: 380px;
+
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.4);
+
+  display: flex;
+
+  perspective: 2000px;
+  z-index: 20;
+}
+
+/* PAGE BASE */
+.page {
+  width: 50%;
+  height: 100%;
+  position: absolute;
+
+  background: #fff;
+  border-radius: 6px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 1rem;
+
+  backface-visibility: hidden;
+}
+
+.page.left {
+  left: 0;
+  z-index: 1;
+  background: #f5efe4;
+
+  box-shadow:
+    inset -2px 0 10px rgba(0,0,0,0.1);
+}
+
+.page.right {
+  left: 50%;
+  transform-origin: left center;
+  transform: rotateY(0deg);
+  
+  transform-style: preserve-3d;
+  transition: transform 0.8s ease;
+
+  box-shadow:
+    0 10px 30px rgba(0,0,0,0.1),
+    inset 2px 0 10px rgba(0,0,0,0.05);
+}
+
+/* FRONT COVER */
+.cover.front {
+  background: #1f7a63;
+  color: white;
+  z-index: 5;
+}
+
+/* CONTENT */
+.content {
+  text-align: center;
+  font-family: "Cormorant Garamond", serif;
+}
+
+/* FRONT COVER */
+/* .cover.front {
+  background: #1f7a63;
+  color: white;
+
+  z-index: 5;
+  transform: rotateY(0deg) translateZ(2px);
+} */
+
+/* INNER PAGES */
+.page:nth-child(2) {
+  background: #fff;
+  z-index: 4;
+  transform: translateZ(1px);
+}
+
+.page:nth-child(3) {
+  background: #fff;
+  z-index: 3;
+  transform: translateZ(0px);
+}
+
+.page:nth-child(4) {
+  background: #fff;
+  z-index: 2;
+  transform: translateZ(-1px);
+}
+
+/* BACK COVER */
+.cover.back {
+  background: #8b5e3c;
+
+  transform: rotateY(180deg) translateZ(-2px);
+  z-index: 1;
+}

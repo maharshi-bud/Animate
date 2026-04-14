@@ -6,6 +6,8 @@ import Lenis from "@studio-freight/lenis";
 import Header from "./components/Header";
 import Hero from "./components/Hero";
 import SocialProof from "./components/SocialProof";
+import FlipBook from "./components/FlipBook";
+
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -84,6 +86,7 @@ function App() {
       <Hero />
       <SocialProof />
 
+      <FlipBook/>
       
     </main>
   );
