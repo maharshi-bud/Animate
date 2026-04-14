@@ -1,0 +1,56 @@
+
+.header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  padding: 1.2rem 3rem;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Logo */
+.logo {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.8rem;
+  letter-spacing: 1px;
+}
+
+/* Nav */
+.nav a {
+  margin: 0 1.2rem;
+  text-decoration: none;
+  color: #e5e5e5;
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.95rem;
+  transition: opacity 0.3s;
+}
+
+.nav a:hover {
+  opacity: 0.6;
+}
+
+/* CTA */
+.cta {
+  background: #1f7a63; /* emerald */
+  color: white;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 999px;
+
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.9rem;
+
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.cta:hover {
+  background: #166b55;
+}
