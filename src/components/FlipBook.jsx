@@ -7,14 +7,68 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function FlipBook() {
   const bookRef = useRef(null);
-  const progress = useRef(0);
-  const isActive = useRef(false);
+
+  const bookPages = [
+  {
+    text: "The forest had been silent for years...",
+    img: "https://images.unsplash.com/photo-1501785888041-af3ef285b470"
+  },
+  {
+    text: "No birds. No wind. Just silence.",
+    img: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e"
+  },
+  {
+    text: "Until she stepped inside...",
+    img: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee"
+  },
+  {
+    text: "Something was watching her...",
+    img: "https://images.unsplash.com/photo-1493244040629-496f6d136cc3"
+  },
+  {
+    text: "And it knew her name...",
+    img: "https://images.unsplash.com/photo-1502082553048-f009c37129b9"
+  },
+];
+
+  const renderPage = (el, page) => {
+  if (!el) return;
+
+  if (!page) {
+    el.innerHTML = "";
+    return;
+  }
+
+  el.innerHTML = `
+    <div class="page-inner">
+      <img src="${page.img}" alt="" />
+      <p>${page.text}</p>
+    </div>
+  `;
+};
 
   useEffect(() => {
     const book = bookRef.current;
-    const pages = document.querySelectorAll(".page.right");
 
-    // 🎯 ENTRY: appear after section comes into view
+    const leftEl = document.getElementById("leftContent");
+    const rightEl = document.getElementById("rightContent");
+    const flipEl = document.getElementById("flipContent");
+    const flipPage = document.getElementById("flipPage");
+
+    let currentIndex = 0;
+    let isFlipping = false;
+    const total = bookPages.length;
+
+    // 🧠 INITIAL CONTENT
+    leftEl.innerText = "";
+    rightEl.innerText = bookPages[0];
+    flipEl.innerText = bookPages[1];
+
+//     renderPage(leftEl, bookPages[currentIndex]);
+// renderPage(rightEl, bookPages[nextIndex]);
+// renderPage(flipEl, bookPages[nextIndex ]);
+
+    // 🎯 ENTRY ANIMATION
     gsap.fromTo(
       book,
       {
@@ -33,8 +87,8 @@ export default function FlipBook() {
         transform: "translate(-50%, -50%)",
         scrollTrigger: {
           trigger: ".flipbook-section",
-          start: "top 150%",
-          // end: "top 40%",
+          start: "top 90%",
+          end: "top 40%",
           scrub: true,
         },
       }
@@ -44,40 +98,58 @@ export default function FlipBook() {
     ScrollTrigger.create({
       trigger: ".flipbook-section",
       start: "top top",
-      end: "+=1200",
+      end: "+=1500",
       pin: true,
-      pinSpacing: true,
-      onEnter: () => (isActive.current = true),
-      onLeave: () => (isActive.current = false),
-      onEnterBack: () => (isActive.current = true),
-      onLeaveBack: () => (isActive.current = false),
     });
 
-    // 📘 PAGE CONTROL VIA SCROLL
+
+    // 📘 CLEAN SCROLL FLIP
     const handleWheel = (e) => {
-      if (!isActive.current) return;
+      e.preventDefault(); // 🔥 STOP PAGE SCROLL
 
-      e.preventDefault();
+      if (isFlipping) return;
 
-      progress.current += e.deltaY * 0.002;
-      progress.current = Math.max(0, Math.min(progress.current, 1));
+      const direction = e.deltaY > 0 ? 1 : -1;
+      const nextIndex = currentIndex + direction;
 
-      const activePage = Math.floor(progress.current * (pages.length + 1));
+      // 🛑 LIMITS
+      if (nextIndex < 0 || nextIndex >= total - 1) return;
 
-      pages.forEach((page, index) => {
-  if (index < activePage) {
-    page.style.transform = "rotateY(-180deg)";
-  } else {
-    page.style.transform = "rotateY(0deg)";
-  }
-});
+      isFlipping = true;
 
-      // 🔓 unlock scroll only at end
-      if (progress.current >= 0.99) {
-        document.body.style.overflow = "";
-      } else {
-        document.body.style.overflow = "hidden";
-      }
+      const tl = gsap.timeline({
+        onComplete: () => {
+          currentIndex = nextIndex;
+          isFlipping = false;
+        },
+      });
+
+      // 🔥 FIRST HALF (fold)
+      tl.to(flipPage, {
+        rotateY: -90,
+        duration: 1,
+        ease: "power2.in",
+        onComplete: () => {
+          // // 📖 UPDATE CONTENT MID-FLIP
+          // leftEl.innerText = bookPages[currentIndex] || "";
+          // rightEl.innerText = bookPages[nextIndex] || "";
+          // flipEl.innerText = bookPages[nextIndex + 1] || "";
+
+          renderPage(leftEl, bookPages[currentIndex]);
+renderPage(rightEl, bookPages[nextIndex]);
+renderPage(flipEl, bookPages[nextIndex + 1]);
+        },
+      });
+
+      // 🔥 SECOND HALF (complete flip)
+      tl.to(flipPage, {
+        rotateY: -180,
+        duration: 1,
+        ease: "power2.out",
+      });
+
+      // 🔄 RESET
+      tl.set(flipPage, { rotateY: 0 });
     };
 
     window.addEventListener("wheel", handleWheel, { passive: false });
@@ -89,40 +161,25 @@ export default function FlipBook() {
   }, []);
 
   return (
-  
     <section className="flipbook-section">
-  <div className="book" ref={bookRef}>
+      <div className="book" ref={bookRef}>
+        
+        {/* LEFT PAGE */}
+        <div className="page left">
+          <div className="content" id="leftContent"></div>
+        </div>
 
-    {/* LEFT PAGE */}
-    <div className="page left">
-      <div className="content">
-        <p>The forest had been silent for years...</p>
+        {/* RIGHT STATIC */}
+        <div className="page right-base">
+          <div className="content" id="rightContent"></div>
+        </div>
+
+        {/* FLIP PAGE */}
+        <div className="page right" id="flipPage">
+          <div className="content" id="flipContent"></div>
+        </div>
+
       </div>
-    </div>
-
-    {/* RIGHT PAGE (FLIPPING) */}
-    <div className="page right cover front">
-      <div className="content">
-        <h2>The Silent Forest</h2>
-        <p>Scroll to read</p>
-      </div>
-    </div>
-
-    {/* NEXT RIGHT PAGE */}
-    <div className="page right">
-      <div className="content">
-        <p>No birds. No wind. Just silence.</p>
-      </div>
-    </div>
-
-    <div className="page right">
-      <div className="content">
-        <p>Until she stepped inside...</p>
-      </div>
-    </div>
-
-  </div>
-</section>
-  
+    </section>
   );
 }
