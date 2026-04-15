@@ -129,6 +129,8 @@ export default function FlipBook() {
         rotateY: -90,
         duration: 1,
         ease: "power2.in",
+          boxShadow: "0 40px 80px rgba(0,0,0,0.35)",
+
         onComplete: () => {
           // // 📖 UPDATE CONTENT MID-FLIP
           // leftEl.innerText = bookPages[currentIndex] || "";
@@ -146,6 +148,8 @@ renderPage(flipEl, bookPages[nextIndex + 1]);
         rotateY: -180,
         duration: 1,
         ease: "power2.out",
+          boxShadow: "0 20px 40px rgba(0,0,0,0.2)",
+
       });
 
       // 🔄 RESET

@@ -7,6 +7,7 @@ import Header from "./components/Header";
 import Hero from "./components/Hero";
 import SocialProof from "./components/SocialProof";
 import FlipBook from "./components/FlipBook";
+import ScrollSections from "./components/ScrollSections";
 
 
 gsap.registerPlugin(ScrollTrigger);
@@ -43,16 +44,16 @@ function App() {
       });
 
       // 🌊 Scroll movement (subtle depth effect)
-      gsap.to(el, {
-        y: i % 2 === 0 ? "+=200" : "-=200",
-        ease: "none",
-        scrollTrigger: {
-          trigger: document.body,
-          start: "top top",
-          end: "bottom bottom",
-          scrub: 1,
-        },
-      });
+      // gsap.to(el, {
+      //   y: i % 2 === 0 ? "+=200" : "-=200",
+      //   ease: "none",
+      //   scrollTrigger: {
+      //     trigger: document.body,
+      //     start: "top top",
+      //     end: "bottom bottom",
+      //     scrub: 1,
+      //   },
+      // });
     });
 
     return () => {
@@ -87,7 +88,7 @@ function App() {
       <SocialProof />
 
       <FlipBook/>
-      
+      <ScrollSections/>
     </main>
   );
 }

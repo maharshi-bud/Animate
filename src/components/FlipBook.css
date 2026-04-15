@@ -108,3 +108,77 @@
   font-size: 1rem;
   line-height: 1.4;
 }
+
+.page.left {
+  background: #f3ede4; /* warm paper */
+}
+
+.page.right,
+.page.right-base {
+  background: #f7f2e8;
+}
+
+.page::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background-image: url("https://www.transparenttextures.com/patterns/paper-fibers.png");
+  opacity: 0.25;
+
+  pointer-events: none;
+}
+
+.page.left::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 12px;
+  height: 100%;
+
+  background: linear-gradient(
+    to left,
+    rgba(0,0,0,0.15),
+    transparent
+  );
+}
+
+.page.right-base::after,
+.page.right::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 12px;
+  height: 100%;
+
+  background: linear-gradient(
+    to right,
+    rgba(0,0,0,0.12),
+    transparent
+  );
+}
+
+.page.right {
+  box-shadow:
+    0 25px 60px rgba(0,0,0,0.25),
+    inset 4px 0 15px rgba(0,0,0,0.08);
+}
+
+.book::before {
+  content: "";
+  position: absolute;
+  bottom: -10px;
+  left: 10%;
+  width: 80%;
+  height: 20px;
+
+  background: radial-gradient(
+    ellipse,
+    rgba(0,0,0,0.25),
+    transparent
+  );
+
+  filter: blur(10px);
+}

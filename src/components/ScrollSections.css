@@ -1,0 +1,147 @@
+/* ===================================================== */
+/* 🔥 GLOBAL FIX */
+/* ===================================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  overflow-x: hidden;
+}
+
+/* ===================================================== */
+/* BASE */
+/* ===================================================== */
+
+body {
+  background: #000;
+  color: #fff;
+  font-family: sans-serif;
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* ===================================================== */
+/* 🔵 VERTICAL SECTION */
+/* ===================================================== */
+
+#vertical {
+  padding: 120px 0;
+}
+
+/* FLEX LAYOUT */
+.vertical__content {
+  display: flex;
+  align-items: flex-start;
+  gap: 4rem;
+}
+
+/* LEFT (PINNED) */
+.col_left {
+  flex: 0 0 40%;
+  display: flex;
+  justify-content: center;
+}
+
+/* RIGHT */
+.col_right {
+  flex: 0 0 60%;
+}
+
+/* ITEMS */
+.vertical__item {
+  margin-bottom: 120px;
+}
+
+.vertical__item h3 {
+  color: #ff98a2;
+  margin-bottom: 10px;
+}
+
+.vertical__item p {
+  color: #ccc;
+}
+
+/* ===================================================== */
+/* 🟣 HORIZONTAL SECTION */
+/* ===================================================== */
+
+#horizontal {
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+}
+
+.horizontal__content {
+  display: flex;
+  align-items: center;
+  gap: 60px;
+  height: 100%;
+  padding: 0 10vw;
+}
+
+.horizontal__item {
+  flex: 0 0 auto;
+  width: 220px;
+  height: 320px;
+  background: #f5efe4;
+  border-radius: 12px;
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+.book-cover {
+  width: 100%;
+  height: 80%;
+  background: linear-gradient(135deg, #1f7a63, #0f3d30);
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.horizontal__item h4 {
+  color: #111;
+}
+
+/* ===================================================== */
+/* 🔥 CARD */
+/* ===================================================== */
+
+.card {
+  width: 220px;
+  height: 220px;
+  border-radius: 30px;
+  overflow: hidden;
+  position: relative;
+}
+
+.background {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle, #ff89cc, #62c2fe);
+}
+
+.logo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* ===================================================== */
+/* 🔥 FLIPBOOK SAFE */
+/* ===================================================== */
+
+.flipbook-wrapper {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+}
