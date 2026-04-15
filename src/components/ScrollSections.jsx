@@ -32,15 +32,18 @@ export default function ScrollSections() {
 
   useEffect(() => {
     // 🔥 LENIS (ONLY ONCE)
-    const lenis = new Lenis({ duration: 1.2 });
+    const lenis = new Lenis({ duration: 0.8 });
 
     function raf(time) {
       lenis.raf(time);
-      ScrollTrigger.update();
+    //   ScrollTrigger.update();
       requestAnimationFrame(raf);
     }
-    requestAnimationFrame(raf);
 
+
+    requestAnimationFrame(raf);
+lenis.on("scroll", ScrollTrigger.update);
+ScrollTrigger.refresh();
     // 🔵 PIN LEFT
     ScrollTrigger.create({
       trigger: "#vertical",
@@ -70,7 +73,7 @@ export default function ScrollSections() {
 
           const progress = Math.min(distance / (window.innerHeight / 2), 1);
 
-          const scale = 1.15 - progress * 0.25;
+          const scale = 1.3 - progress * 0.25;
           const opacity = 1 - progress * 0.6;
 
           gsap.set(el, { scale, opacity });
@@ -98,7 +101,8 @@ export default function ScrollSections() {
           x,
           scale,
           opacity,
-          duration: 0.6,
+          duration: 0.6
+          ,
           ease: "power3.out",
           zIndex: total - Math.abs(offset),
         });

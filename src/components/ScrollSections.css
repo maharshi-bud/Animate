@@ -121,6 +121,7 @@ body {
   border-radius: 30px;
   overflow: hidden;
   position: relative;
+  margin-top: 150px;
 }
 
 .background {
