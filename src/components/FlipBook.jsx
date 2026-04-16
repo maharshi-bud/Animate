@@ -7,27 +7,29 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function FlipBook() {
   const bookRef = useRef(null);
-
+  const img1 = "https://images.unsplash.com/photo-1501785888041-af3ef285b470";
+const img2 = "https://images.unsplash.com/photo-1441974231531-c6227db76b6e";
+const img3 = "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee";
+const img4 = "https://images.unsplash.com/photo-1493244040629-496f6d136cc3";
+const img5 = "https://images.unsplash.com/photo-1502082553048-f009c37129b9";
   const bookPages = [
   {
     text: "The forest had been silent for years...",
-    img: "https://images.unsplash.com/photo-1501785888041-af3ef285b470"
+    img: img1
   },
   {
     text: "No birds. No wind. Just silence.",
-    img: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e"
-  },
+    img: img2 },
   {
     text: "Until she stepped inside...",
-    img: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee"
+    img: img3
   },
   {
     text: "Something was watching her...",
-    img: "https://images.unsplash.com/photo-1493244040629-496f6d136cc3"
-  },
+    img: img4 },
   {
     text: "And it knew her name...",
-    img: "https://images.unsplash.com/photo-1502082553048-f009c37129b9"
+    img: img5
   },
 ];
 
@@ -97,7 +99,7 @@ export default function FlipBook() {
     // 📌 PIN SECTION
     ScrollTrigger.create({
       trigger: ".flipbook-section",
-      start: "top top",
+      start: "top 150px",
       end: "+=1500",
       pin: true,
     });

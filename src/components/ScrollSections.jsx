@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { motion } from "framer-motion";
+import { animate, motion } from "framer-motion";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lenis from "@studio-freight/lenis";
@@ -9,7 +9,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function ScrollSections() {
   const itemRefs = useRef([]);
-
+  const lenis = null;
   const authors = [
     "Ava Bennett",
     "Liam Carter",
@@ -32,54 +32,73 @@ export default function ScrollSections() {
 
   useEffect(() => {
     // 🔥 LENIS (ONLY ONCE)
-    const lenis = new Lenis({ duration: 0.8 });
+    const lenis = new Lenis({ duration: 0.5, smooth: true });
 
     function raf(time) {
       lenis.raf(time);
-    //   ScrollTrigger.update();
+      ScrollTrigger.update();
       requestAnimationFrame(raf);
     }
 
 
     requestAnimationFrame(raf);
-lenis.on("scroll", ScrollTrigger.update);
+// lenis.on("scroll", ScrollTrigger.update);
+
+ScrollTrigger.scrollerProxy(document.body, {
+  scrollTop(value) {
+    return arguments.length
+      ? lenis.scrollTo(value)
+      : lenis.scroll;
+  },
+  getBoundingClientRect() {
+    return {
+      top: 0,
+      left: 0,
+      width: window.innerWidth,
+      height: window.innerHeight,
+    };
+  },
+});
 ScrollTrigger.refresh();
     // 🔵 PIN LEFT
     ScrollTrigger.create({
       trigger: "#vertical",
-      start: "top top",
+      start: "top 140px",
       end: "bottom bottom",
       pin: ".col_left",
     });
-
     // 🔵 VERTICAL FOCUS
     const vItems = itemRefs.current;
 
     ScrollTrigger.create({
-      trigger: "#vertical",
-      start: "top top",
-      end: "bottom bottom",
-      scrub: true,
+  trigger: "#vertical",
+  start: "top top",
+  end: "bottom bottom",
+  scrub: true,
 
-      onUpdate: () => {
-        const center = window.innerHeight / 2;
+  onUpdate: (self) => {
+    const center = window.innerHeight / 2;
 
-        vItems.forEach((el) => {
-          if (!el) return;
+    itemRefs.current.forEach((el) => {
+      if (!el) return;
 
-          const rect = el.getBoundingClientRect();
-          const itemCenter = rect.top + rect.height / 2;
-          const distance = Math.abs(center - itemCenter);
+      const rect = el.getBoundingClientRect();
+      const itemCenter = rect.top + rect.height / 2;
+      const distance = Math.abs(center - itemCenter);
 
-          const progress = Math.min(distance / (window.innerHeight / 2), 1);
+      const progress = Math.min(distance / center, 1);
 
-          const scale = 1.3 - progress * 0.25;
-          const opacity = 1 - progress * 0.6;
+      // 🔥 smoother mapping
+      const scale = 1.3 - progress * 0.2;
+      const opacity = 1 - progress * 0.6;
 
-          gsap.set(el, { scale, opacity });
-        });
-      },
+      gsap.set(el, {
+        scale,
+        opacity,
+      });
     });
+  },
+});
 
     // 🟣 AUTO PLAY CAROUSEL (FIXED)
     const hItems = document.querySelectorAll(".horizontal__item");
@@ -87,27 +106,32 @@ ScrollTrigger.refresh();
     let current = 0;
 
     function updateCarousel() {
-      const total = hItems.length;
+  const total = hItems.length;
 
-      hItems.forEach((el, i) => {
-        const offset = i - current;
+  hItems.forEach((el, i) => {
+    // 🧠 circular offset (KEY PART)
+    let offset = i - current;
 
-        const x = offset * 260;
+    if (offset > total / 2) offset -= total;
+    if (offset < -total / 2) offset += total;
+    
+    const x = offset * 260;
 
-        const scale = 1 - Math.min(Math.abs(offset) * 0.2, 0.4);
-        const opacity = 1 - Math.min(Math.abs(offset) * 0.5, 0.7);
-
-        gsap.to(el, {
-          x,
-          scale,
-          opacity,
-          duration: 0.6
-          ,
-          ease: "power3.out",
-          zIndex: total - Math.abs(offset),
-        });
-      });
-    }
+    const scale = 1 - Math.min(Math.abs(offset) * 0.2, 0.4);
+    const opacity = 1 - Math.min(Math.abs(offset) * 0.5, 0.7);
+    // const opacity = 05, 0.7);
+    
+    gsap.to(el, {
+      x,
+      scale,
+      opacity,
+      duration: 0.6,
+      ease: "power3.out",
+      onUpdate:animate,
+      zIndex: total - Math.abs(offset),
+    });
+  });
+}
 
     // INIT
     updateCarousel();
@@ -116,6 +140,8 @@ ScrollTrigger.refresh();
     const interval = setInterval(() => {
       current = (current + 1) % hItems.length;
       updateCarousel();
+      
+
     }, 2500);
 
     // 🔥 CLICK SUPPORT

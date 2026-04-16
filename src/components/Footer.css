@@ -1,0 +1,283 @@
+/* ===================================================== */
+/* 🔥 GLOBAL */
+/* ===================================================== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #f1ebe3;
+  font-family: sans-serif;
+}
+
+/* ===================================================== */
+/* 🔥 FOOTER */
+/* ===================================================== */
+.footer {
+  background: #f1ebe3;
+  padding: 30px 0 10px;
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 0 2rem;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 3rem;
+}
+
+/* ===================================================== */
+/* 🔥 BRAND */
+/* ===================================================== */
+.footer-brand {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  height: 160px;
+}
+
+/* ===================================================== */
+/* 🔥 CARD */
+/* ===================================================== */
+.card {
+  width: 240px;
+  height: 160px;
+  background: #243137;
+  border-radius: 16px;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: 0.3s ease;
+  margin: 0;
+}
+
+.card:hover {
+  transform: scale(1.05);
+}
+
+/* CENTER CONTENT */
+.center-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* TEXT */
+.card-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  color: #bd9f67;
+  font-size: 18px;
+  font-family: "Cormorant Garamond", serif;
+  text-align: center;
+
+  transition: opacity 0.3s ease;
+}
+
+.card-text.hover {
+  opacity: 0;
+}
+
+.card:hover .card-text.default {
+  opacity: 0;
+}
+
+.card:hover .card-text.hover {
+  opacity: 1;
+}
+
+/* BORDER */
+.border {
+  position: absolute;
+  inset: 0;
+  border: 2px solid #bd9f67;
+  opacity: 0;
+  transform: rotate(10deg);
+  transition: 0.4s ease;
+}
+
+.card:hover .border {
+  inset: 12px;
+  opacity: 1;
+  transform: rotate(0);
+}
+
+/* ===================================================== */
+/* 🔥 TEXT */
+/* ===================================================== */
+.footer-text h2 {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 2rem;
+  margin: 0;
+}
+
+.footer-text p {
+  color: #555;
+  max-width: 260px;
+  margin-top: 10px;
+}
+
+/* ===================================================== */
+/* 🔥 LINKS */
+/* ===================================================== */
+.footer-links {
+  display: flex;
+  gap: 3rem;
+}
+
+.footer-links a {
+  display: block;
+  color: #1a1a1a;
+  margin-bottom: 6px;
+}
+
+/* ===================================================== */
+/* 🔥 SHARE BUTTON (YOUR ORIGINAL STYLE) */
+/* ===================================================== */
+.tooltip-container {
+  position: relative;
+}
+
+.button-content {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  padding: 12px 22px;
+  border-radius: 50px;
+  background: linear-gradient(135deg, #6e8efb, #a777e3);
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.button-content:hover {
+  transform: translateY(-3px);
+}
+
+.tooltip-content {
+  position: absolute;
+  top: 120%;
+  left: 50%;
+  transform: translateX(-50%) scale(0.8);
+  opacity: 0;
+  transition: 0.3s;
+}
+
+.tooltip-container:hover .tooltip-content {
+  opacity: 1;
+  transform: translateX(-50%) scale(1);
+}
+
+/* ===================================================== */
+/* ⚡ EASTER EGG (FULL ORIGINAL + FIXED) */
+/* ===================================================== */
+.plate-tooltip-container {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+
+  display: flex;              /* 🔥 KEEP THIS */
+  justify-content: center;
+  padding: 0;                 /* remove spacing only */
+
+  z-index: 9999;
+}
+
+/* KEEP EVERYTHING BELOW EXACTLY */
+
+.tooltip-trigger {
+  --primary: #ffb200;
+  width: 3rem;
+  height: 3rem;
+  background: linear-gradient(to bottom, #3a3d44 0%, #212329 100%);
+  border: 1px solid #444;
+  box-shadow:
+    inset 0 2px 2px -1px rgba(255, 255, 255, 0.2),
+    inset 0 -5px 5px -2px rgba(0, 0, 0, 0.8),
+    0 10px 20px -3px rgba(0, 0, 0, 0.5);
+  border-radius: 0.25rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  cursor: help;
+  transition: transform 0.1s ease-out;
+}
+
+.tooltip-trigger:hover {
+  animation: electric-shock 0.25s linear infinite;
+  
+  filter: drop-shadow(0 0 2px #ffb200);
+
+}
+
+.tooltip-trigger:hover .warning-symbol {
+  animation: warning-pulse 1s ease-in-out infinite;
+
+}
+
+/* KEYFRAMES (REQUIRED) */
+@keyframes electric-shock {
+  0% { transform: translate(0,0); }
+  25% { transform: translate(-1px,1px); }
+  50% { transform: translate(1px,-1px); }
+  75% { transform: translate(-1px,-1px); }
+  100% { transform: translate(0,0); }
+}
+
+@keyframes warning-pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+/* ===================================================== */
+/* 🔥 BOTTOM */
+/* ===================================================== */
+.footer-bottom {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 0.8rem;
+  color: #777;
+}
+
+.warning-symbol {
+  width: 0;
+  height: 0;
+
+  border-left: 0.7rem solid transparent;
+  border-right: 0.7rem solid transparent;
+  border-bottom: 1.2rem solid #ffb200;
+
+  position: relative;
+}
+
+/* ⚠️ THE "!" SYMBOL */
+.warning-symbol::after {
+  content: "!";
+  position: absolute;
+
+  left: 50%;
+  top: 0.7rem;
+  transform: translate(-50%, -50%);
+
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: #111;
+}
+
+.warning-symbol {
+  filter: drop-shadow(0 0 6px #ffb200);
+}

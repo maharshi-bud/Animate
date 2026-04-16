@@ -2,20 +2,23 @@ import { useEffect, useRef } from "react";
 import "./SocialProof.css";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { gsap } from "gsap";
-
+import book1 from "./images/book1.png";
+import book2 from "./images/book2.png";
+import book3 from "./images/book3.png";
+import book4 from "./images/book4.png";
+import book5 from "./images/book5.png";
+import book6 from "./images/book6.png";
+import book7 from "./images/book7.png";
 gsap.registerPlugin(ScrollTrigger);
 
 const quotes = [
-  { text: "Stories that linger long after the last page.", author: "Ava Bennett" },
-  { text: "A quiet place to discover voices that matter.", author: "Liam Carter" },
-  { text: "Not just books — experiences.", author: "Sophia Rao" },
-  { text: "Where stories find their readers.", author: "Noah Mehta" },
-  { text: "Reading feels personal again.", author: "Ananya Shah" },
-  { text: "A new way to explore authors.", author: "Rohan Iyer" },
-  { text: "Every page feels intentional.", author: "Maya Kapoor" },
-  { text: "Less noise, more meaning.", author: "Arjun Verma" },
-  { text: "A bookstore, reimagined.", author: "Zara Khan" },
-  { text: "Stories worth slowing down for.", author: "Ishaan Patel" },
+  { text: "Stories that linger long after the last page.", author: "Ava Bennett", img: book1 },
+  { text: "A quiet place to discover voices that matter.", author: "Liam Carter", img:book2 },
+  { text: "Not just books — experiences.", author: "Sophia Rao", img: book3 },
+  { text: "Where stories find their readers.", author: "Noah Mehta", img: book4 },
+  { text: "Reading feels personal again.", author: "Ananya Shah", img: book5 },
+  { text: "Some stories don’t just end — they stay with you.", author: "Arjun Verma", img: book6 },
+  { text: "A place where every page feels like it was chosen for you.", author: "Zara Khan", img: book7},
 ];
 
 export default function SocialProof() {
@@ -24,10 +27,22 @@ export default function SocialProof() {
   const startX = useRef(0);
   const active = useRef(0);
   const isDown = useRef(false);
+  const isDragging = useRef(false);
   const isActive = useRef(false);
 
   const speedWheel = 0.1;
-  const speedDrag = -0.1;
+
+  /* 🔥 CLICK FUNCTION (MOVED OUTSIDE useEffect) */
+  const goToIndex = (index, total) => {
+    const target = (index / (total - 1)) * 100;
+
+    gsap.to(progress, {
+      current: target,
+      duration: 0.3,
+      ease: "power3.out",
+      onUpdate: animate,
+    });
+  };
 
   const getZindex = (array, index) =>
     array.map((_, i) =>
@@ -56,94 +71,74 @@ export default function SocialProof() {
   };
 
   useEffect(() => {
-  animate();
-
-  // 🔥 Track section visibility
-  ScrollTrigger.create({
-    trigger: containerRef.current,
-    start: "top center",
-    end: "bottom center",
-    onEnter: () => {
-      isActive.current = true;
-      lockScroll();
-    },
-    // onLeave: () => {
-    //   isActive.current = false;
-    //   unlockScroll();
-    // },
-    onEnterBack: () => {
-      isActive.current = true;
-      lockScroll();
-    },
-    onLeaveBack: () => {
-      isActive.current = false;
-      unlockScroll();
-    },
-  });
-
-  function lockScroll() {
-    document.body.style.overflow = "hidden";
-  }
-
-  function unlockScroll() {
-    document.body.style.overflow = "";
-  }
-
-  const handleWheel = (e) => {
-    if (!isActive.current) return;
-
-    e.preventDefault(); // 🚫 stop page scroll
-
-    progress.current += e.deltaY * speedWheel;
-
-    // 🎯 Clamp
-    progress.current = Math.max(0, Math.min(progress.current, 100));
-
     animate();
 
-    // 🔓 Unlock at ends
-    if (progress.current <= 0 || progress.current > 100) {
-      unlockScroll();
-    } else {
-      lockScroll();
-    }
-  };
+    document.body.style.cursor = "grab";
 
-  const handleMove = (e) => {
-    if (!isActive.current || !isDown.current) return;
+    ScrollTrigger.create({
+      trigger: containerRef.current,
+      start: "top center",
+      end: "top center",
+      onEnter: () => {
+        isActive.current = true;
+        document.body.style.overflow = "hidden";
+      },
+      onLeaveBack: () => {
+        isActive.current = false;
+        document.body.style.overflow = "";
+      },
+    });
 
-    const x = e.clientX;
-    const delta = (x - startX.current) * speedDrag;
+    const handleWheel = (e) => {
+      if (!isActive.current) return;
+      e.preventDefault();
 
-    progress.current += delta;
-    progress.current = Math.round(progress.current / 10) * 20;
+      progress.current += e.deltaY * speedWheel;
+      progress.current = Math.max(0, Math.min(progress.current, 100));
 
-    startX.current = x;
-    animate();
-  };
+      animate();
+    };
 
-  const handleDown = (e) => {
-    isDown.current = true;
-    startX.current = e.clientX;
-  };
+    const handleDown = (e) => {
+      isDown.current = true;
+      isDragging.current = false;
+      startX.current = e.clientX;
+      document.body.style.cursor = "grabbing";
+    };
 
-  const handleUp = () => {
-    isDown.current = false;
-  };
+    const handleMove = (e) => {
+      if (!isActive.current || !isDown.current) return;
 
-  window.addEventListener("wheel", handleWheel, { passive: false });
-  window.addEventListener("mousemove", handleMove);
-  window.addEventListener("mousedown", handleDown);
-  window.addEventListener("mouseup", handleUp);
+      const x = e.clientX;
+      const delta = x - startX.current;
 
-  return () => {
-    window.removeEventListener("wheel", handleWheel);
-    window.removeEventListener("mousemove", handleMove);
-    window.removeEventListener("mousedown", handleDown);
-    window.removeEventListener("mouseup", handleUp);
-    ScrollTrigger.getAll().forEach((t) => t.kill());
-  };
-}, []);
+      if (Math.abs(delta) > 3) isDragging.current = true;
+
+      progress.current += delta * 0.15;
+      progress.current = Math.max(0, Math.min(progress.current, 100));
+
+      startX.current = x;
+      animate();
+    };
+
+    const handleUp = () => {
+      isDown.current = false;
+      document.body.style.cursor = "grab";
+    };
+
+    window.addEventListener("wheel", handleWheel, { passive: false });
+    window.addEventListener("mousemove", handleMove);
+    window.addEventListener("mousedown", handleDown);
+    window.addEventListener("mouseup", handleUp);
+
+    return () => {
+      window.removeEventListener("wheel", handleWheel);
+      window.removeEventListener("mousemove", handleMove);
+      window.removeEventListener("mousedown", handleDown);
+      window.removeEventListener("mouseup", handleUp);
+      ScrollTrigger.getAll().forEach((t) => t.kill());
+    };
+  }, []);
 
   return (
     <section className="carousel-section">
@@ -151,10 +146,25 @@ export default function SocialProof() {
 
       <div className="carousel" ref={containerRef}>
         {quotes.map((q, i) => (
-          <div className="carousel-item" key={i}>
-            <div className="carousel-box">
-              <p className="quote-text">“{q.text}”</p>
-              <span className="quote-author">— {q.author}</span>
+          <div
+            className="carousel-item"
+            key={i}
+            onClick={() => {
+              if (!isDragging.current) {
+                goToIndex(i, quotes.length);
+              }
+            }}
+          >
+            <div className="container">
+              <div className="box">
+                <img src={q.img} alt="" className="card-img" />
+
+                <div>
+                  <strong>{q.text}</strong>
+                  <p>{q.author}</p>
+                  <span>Story</span> <span>Preview</span>
+                </div>
+              </div>
             </div>
           </div>
         ))}

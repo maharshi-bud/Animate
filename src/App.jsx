@@ -8,6 +8,7 @@ import Hero from "./components/Hero";
 import SocialProof from "./components/SocialProof";
 import FlipBook from "./components/FlipBook";
 import ScrollSections from "./components/ScrollSections";
+import Footer from "./components/Footer";
 
 
 gsap.registerPlugin(ScrollTrigger);
@@ -86,9 +87,9 @@ function App() {
       <Header />
       <Hero />
       <SocialProof />
-
       <FlipBook/>
       <ScrollSections/>
+      <Footer />
     </main>
   );
 }
