@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import "./App.css";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import Lenis from "@studio-freight/lenis";
+import Lenis from "lenis";
 import Header from "./components/Header";
 import Hero from "./components/Hero";
 import SocialProof from "./components/SocialProof";
