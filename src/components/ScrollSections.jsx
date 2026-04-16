@@ -9,7 +9,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function ScrollSections() {
   const itemRefs = useRef([]);
-  const lenis = null;
+  
   const authors = [
     "Ava Bennett",
     "Liam Carter",
@@ -63,7 +63,7 @@ ScrollTrigger.refresh();
     // 🔵 PIN LEFT
     ScrollTrigger.create({
       trigger: "#vertical",
-      start: "top 140px",
+      start: "top 100px",
       end: "bottom bottom",
       pin: ".col_left",
     });
@@ -167,10 +167,23 @@ ScrollTrigger.refresh();
           <div className="vertical__content">
 
             <div className="col_left">
-              <div className="card">
-                <div className="background"></div>
-                <div className="logo">Authors</div>
-              </div>
+              
+              
+              
+<div class="card" style={{ width: "190px", height: "254px",}}>
+ <div className="card-details">
+  <img 
+    src="https://images.unsplash.com/photo-1544947950-fa07a98d237f" 
+    alt="cover" 
+    className="card-img"
+  />
+  <p className="text-body">Authors</p>
+</div>
+  <button class="card-button">More info</button>
+</div>
+            
+            
+            
             </div>
 
             <div className="col_right">
