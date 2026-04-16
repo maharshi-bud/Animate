@@ -63,7 +63,7 @@ ScrollTrigger.refresh();
     // 🔵 PIN LEFT
     ScrollTrigger.create({
       trigger: "#vertical",
-      start: "top 100px",
+      start: "top 80px",
       end: "bottom bottom",
       pin: ".col_left",
     });
@@ -89,7 +89,7 @@ ScrollTrigger.refresh();
       const progress = Math.min(distance / center, 1);
 
       // 🔥 smoother mapping
-      const scale = 1.3 - progress * 0.2;
+      const scale = 1.4 - progress * 0.2;
       const opacity = 1 - progress * 0.6;
 
       gsap.set(el, {
@@ -177,7 +177,7 @@ ScrollTrigger.refresh();
     alt="cover" 
     className="card-img"
   />
-  <p className="text-body">Authors</p>
+  <p className="text-title">Authors</p>
 </div>
   <button class="card-button">More info</button>
 </div>

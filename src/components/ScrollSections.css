@@ -399,10 +399,11 @@ body {
 }
 
 /*Text*/
-/* .text-title {
+.text-title {
  font-size: 1.5em;
  font-weight: bold;
-} */
+  color: #ffffff;
+}
 
 /*Hover*/
 .card:hover {
@@ -431,6 +432,7 @@ body {
   --color-9: #ff3814;
   width: 100%;
   height: 100%;
+  border-radius: 30px;
   background-color: var(--color-1);
   background-image: linear-gradient(
       to top,
